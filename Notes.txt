@@ -1,0 +1,14 @@
+//commandes 
+
+//npm
+pour exécuter des scripts dans le package json : npm run "nomduscript"
+
+//prisma
+pour exporter la db :
+npx prisma migrate dev 
+
+pour réarranger le code par rapport à la db :
+npx prisma instrospect
+
+
+
