@@ -10,5 +10,8 @@ npx prisma migrate dev
 pour réarranger le code par rapport à la db :
 npx prisma instrospect
 
+Explorateur de base de donnée :
+npx prisma studio
+
 
 
