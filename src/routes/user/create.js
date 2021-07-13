@@ -1,4 +1,5 @@
 const bcrypt = require('bcrypt')
+const { prisma } = require('../../prisma')
 
 async function createUser(req,res){
     const password = req.body.password //je récupère le mot de passe entré par l'utilisateur

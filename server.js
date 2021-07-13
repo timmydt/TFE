@@ -45,15 +45,7 @@ app.get('/list', caveRoutes.list)
   durant laquelle la bouteille ajoutée devra être consommée */
   
   //!!! PAS FONCTIONNEL !!!
-  app.post('/wine', async function(req,res){
-    const wine = await prisma.user.create({
-      data: {
-        name :  req.body.name,
-        caves : {connect: [{id: req.body.cave}]}
-      },
-    })
-    res.status(200).send("les données ont été ajoutées")
-  })
+  app.post('/wine', wineRoutes.createWine)
 
   /*le serveur envoie une notification à l'utilisateur si la date actuelle est 8 jours avant expiration d'une bouteille, et également si 
   la date actuelle est égale à la date de consommation d'une bouteille*/

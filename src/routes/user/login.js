@@ -1,3 +1,8 @@
+const { prisma } = require("../../prisma")
+const bcrypt = require ('bcrypt')
+const jwt = require ('jsonwebtoken')
+
+
 async function login(req,res){
     //récupérer le mot de passe et l'username'
     const username = req.body.username

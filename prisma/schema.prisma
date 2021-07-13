@@ -24,7 +24,7 @@ model Cave {
   creatorId Int
   creator   User   @relation(fields: [creatorId], references: [id])
   bottles   Wine[]
-
+  
   @@index([creatorId], name: "creatorId")
 }
 
