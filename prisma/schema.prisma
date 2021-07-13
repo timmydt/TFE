@@ -9,12 +9,13 @@ datasource db {
 }
 
 model User {
-  id         Int    @id @default(autoincrement())
-  username   String @unique
+  id         Int     @id @default(autoincrement())
+  username   String  @unique
   password   String
-  mail       String @unique
+  mail       String  @unique
   first_name String
   last_name  String
+  admin      Boolean
   caves      Cave[]
 }
 
@@ -24,16 +25,26 @@ model Cave {
   creatorId Int
   creator   User   @relation(fields: [creatorId], references: [id])
   bottles   Wine[]
-  
+
   @@index([creatorId], name: "creatorId")
 }
 
 model Wine {
-  id    Int    @id @default(autoincrement())
-  name  String
-  caves Cave[]
+  id          Int       @id @default(autoincrement())
+  name        String
+  best_before DateTime? @db.Date
+  food        String?
+  grapes      String?
+  isPublic    Boolean
+  maker       String?
+  picture     String?
+  year        Int?
+  caves       Cave[]
 }
 
-model Notes {
-  id Int @id @default(autoincrement())
+model Degustations {
+  id      Int      @id @default(autoincrement())
+  note    String
+  picture String
+  date    DateTime
 }
