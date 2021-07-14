@@ -30,7 +30,7 @@ async function login(req,res){
         const token = jwt.sign({
           id: result.id,
           username : result.username
-        }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        }, process.env.JWT_SECRET, { expiresIn: '3h' });
         res.status(200).send(token)
     }
     //Si le mot de passe n'est pas bon, on prévient l'utilisateur que son mot de passe ou son login entré est incorrect 
