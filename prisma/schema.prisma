@@ -13,8 +13,8 @@ model User {
   username   String  @unique
   password   String
   mail       String  @unique
-  first_name String
-  last_name  String
+  first_name String?
+  last_name  String?
   admin      Boolean
   caves      Cave[]
 }
@@ -44,7 +44,7 @@ model Wine {
 
 model Degustations {
   id      Int      @id @default(autoincrement())
-  note    String
-  picture String
-  date    DateTime
+  note    String?
+  picture String?
+  date    DateTime?
 }
