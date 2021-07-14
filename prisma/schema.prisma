@@ -49,6 +49,7 @@ model Note {
   picture   String?
   date      DateTime?
   creatorId Int
+  name      String?
   creator   User      @relation(fields: [creatorId], references: [id])
 
   @@index([creatorId], name: "creatorId")
