@@ -17,6 +17,7 @@ model User {
   last_name  String?
   admin      Boolean
   caves      Cave[]
+  notes      Note[]
 }
 
 model Cave {
@@ -42,9 +43,13 @@ model Wine {
   caves       Cave[]
 }
 
-model Degustations {
-  id      Int      @id @default(autoincrement())
-  note    String?
-  picture String?
-  date    DateTime?
+model Note {
+  id        Int       @id @default(autoincrement())
+  note      String?
+  picture   String?
+  date      DateTime?
+  creatorId Int
+  creator   User      @relation(fields: [creatorId], references: [id])
+
+  @@index([creatorId], name: "creatorId")
 }
