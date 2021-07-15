@@ -7,8 +7,9 @@ const { prisma } = require("../../prisma")
         note :  req.body.note,
         picture : req.body.picture,
         date : req.body.date,
-        creatorId : req.body.creatorId,
+        creatorId : req.user.id
       }
     })
+    res.status(200).send("la note a été créée")
   }
 module.exports = createNote

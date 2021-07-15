@@ -43,6 +43,9 @@ app.post('/loginUsers', userRoutes.login)
 //L'utilisateur peut créer des caves 
 app.post('/createCave', caveRoutes.createCave)
 
+//L'utilisateur peut supprimer une cave
+app.delete('/deleteCave', caveRoutes.deleteCave)
+
 //L'utilisateur peut consulter toutes ses propres caves. 
 app.get('/listCave', caveRoutes.list)
 

@@ -11,8 +11,9 @@ const { prisma } = require("../../prisma")
         maker : req.body.maker,
         picture : req.body.picture,
         year : req.body.year,
-        caves : {connect: [{id: req.body.cave}]}
       }
     })
+    res.status(200).send("La bouteille a été créée")
   }
+
 module.exports = createWine
