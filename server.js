@@ -49,6 +49,9 @@ app.delete('/deleteCave', caveRoutes.deleteCave)
 //L'utilisateur peut consulter toutes ses propres caves. 
 app.get('/listCave', caveRoutes.list)
 
+//L'utilisateur peut mettre à jour sa cave 
+app.post('/updateCave',caveRoutes.updateCave)
+
 //------------------notes-------------------------//
 
 //L'utilisateur peut créer des notes 
@@ -62,6 +65,9 @@ app.delete('/deleteNote', noteRoutes.deleteNote)
 
 //L'utilisateur peut supprimer plusieurs notes 
 app.delete('/deleteManyNotes', noteRoutes.deleteManyNote)
+
+//L'utilisateur peut mettre à jour une note 
+app.post('/updateNote', noteRoutes.updateNote)
 
 //-------------------vins-------------------------//
 
