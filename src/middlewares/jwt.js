@@ -3,7 +3,7 @@ const jwtMiddleware = expressjwt({
   secret: process.env.JWT_SECRET,
   algorithms: ["HS256"],
 }).unless({
-  path: ["/loginUsers", "/getUsers"],
+  path: ["/users/login", "/users"],
 });
 
 module.exports = {
