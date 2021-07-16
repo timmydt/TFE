@@ -1,5 +1,6 @@
 const { prisma } = require("@prisma/client")
 
+  try{
  async function updateNote(req,res){
 
     const cave = await prisma.cave.update({
@@ -18,4 +19,10 @@ const { prisma } = require("@prisma/client")
 
     res.status(200).send("la note a été mise à jour")
   }
+  }
+  catch {
+    res.status(400).send('Une erreur est survenue')
+  }
+
+  
 module.exports = updateNote

@@ -9,3 +9,10 @@
 // On check si la date d'expiration est passé
 // Si oui on jette l'user
 // Si non on rehash le password, on reset le token et la date et on update l'user
+
+try{
+
+}
+catch {
+  res.status(400).send('Une erreur est survenue')
+}

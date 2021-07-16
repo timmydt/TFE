@@ -1,5 +1,8 @@
 const { prisma } = require("../../prisma")
 
+
+
+  try{
  async function createWine(req,res){
     const wine = await prisma.wine.create({
       data: {
@@ -15,5 +18,10 @@ const { prisma } = require("../../prisma")
     })
     res.status(200).send("La bouteille a été créée")
   }
+  }
+  catch {
+    res.status(400).send('Une erreur est survenue')
+  }
+  
 
 module.exports = createWine

@@ -1,5 +1,6 @@
 const { prisma } = require("../../prisma")
 
+try{
  async function createNote(req,res){
     const note = await prisma.note.create({
       data: {
@@ -12,4 +13,11 @@ const { prisma } = require("../../prisma")
     })
     res.status(200).send("la note a été créée")
   }
+
+  
+}
+catch {
+    res.status(400).send('Une erreur est survenue')
+}
+
 module.exports = createNote

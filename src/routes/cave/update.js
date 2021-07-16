@@ -1,5 +1,6 @@
 const { prisma } = require("../../prisma")
 
+try{
  async function updateCave(req,res){
 
     const cave = await prisma.cave.update({
@@ -14,4 +15,10 @@ const { prisma } = require("../../prisma")
 
     res.status(200).send("la cave a été mise à jour")
   }
+
+}
+catch {
+    res.status(400).send('Une erreur est survenue')
+}
+
 module.exports = updateCave

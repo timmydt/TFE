@@ -26,6 +26,7 @@ const caveRoutes = require('./src/routes/cave')
 const noteRoutes = require('./src/routes/note')
 const wineRoutes = require('./src/routes/wine')
 const raspRoutes = require('./src/routes/raspberry')
+const deletewine = require('./src/routes/wine/delete')
 
 //---------------utilisateurs---------------------//
 
@@ -73,6 +74,12 @@ app.post('/note/update', noteRoutes.updateNote)
 
 //L'utilisateur peut créer des vins pour les poster directement dans une cave 
 app.post('/wine/create', wineRoutes.createWine)
+
+//L'utilisateur peut supprimer des vins 
+app.delete('/wine/user', wineRoutes.deleteWine)
+
+//un administrateur peut supprimer des vins, privés ou publics
+app.delete('/wine/admin', wineRoutes.deleteWineAdmin)
 
 //----------------raspberry-----------------------//
 

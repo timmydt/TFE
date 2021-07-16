@@ -1,5 +1,6 @@
 const { prisma } = require("../../prisma")
 
+try{
 async function list(req,res){
   const caves = await prisma.cave.findMany({
     where:{
@@ -11,6 +12,11 @@ async function list(req,res){
   })
 
   return res.status(200).send(caves)
+}
+
+}
+catch {
+    res.status(400).send('Une erreur est survenue')
 }
 
 module.exports = list

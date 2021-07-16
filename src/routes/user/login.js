@@ -2,7 +2,7 @@ const { prisma } = require("../../prisma")
 const bcrypt = require ('bcrypt')
 const jwt = require ('jsonwebtoken')
 
-
+  try{
 async function login(req,res){
     //récupérer le mot de passe et l'username'
     const username = req.body.username
@@ -43,5 +43,10 @@ async function login(req,res){
       res.status(403).send("Le nom d'utilisateur ou le mot de passe entré est incorrect")
     }
   }
+  }
+  catch {
+    res.status(400).send('Une erreur est survenue')
+  }
+  
 
 module.exports = login

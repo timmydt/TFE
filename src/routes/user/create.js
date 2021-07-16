@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt')
 const { prisma } = require('../../prisma')
 
+try{
 async function createUser(req,res){
     const password = req.body.password //je récupère le mot de passe entré par l'utilisateur
     const salt=await bcrypt.genSalt(10) //il génère le nombre de fois qu'il sera salé
@@ -16,6 +17,10 @@ async function createUser(req,res){
       },
     })
     res.status(200).send("l'utilisateur a été ajouté dans la base de données")
+}
+}
+catch {
+  res.status(400).send('Une erreur est survenue')
 }
 
 
