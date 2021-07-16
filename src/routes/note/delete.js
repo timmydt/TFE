@@ -17,4 +17,3 @@ catch {
 }
 
 module.exports = deleteNote
-
