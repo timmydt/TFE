@@ -30,49 +30,49 @@ const raspRoutes = require('./src/routes/raspberry')
 //---------------utilisateurs---------------------//
 
 //Récupérer tous les utilisateurs présents dans la base de données 
-app.get('/getUsers', userRoutes.list)
+app.get('/users', userRoutes.list)
 
 //Poster un utilisateur dans la base de données
-app.post('/postUsers', userRoutes.createUser)
+app.post('/users/create', userRoutes.createUser)
 
 //Un utilisateur se log sur le serveur, on test si il existe et si il se log correctement
-app.post('/loginUsers', userRoutes.login)
+app.post('/users/login', userRoutes.login)
 
 //------------------caves-------------------------//
 
 //L'utilisateur peut créer des caves 
-app.post('/createCave', caveRoutes.createCave)
+app.post('/cave/create', caveRoutes.createCave)
 
 //L'utilisateur peut supprimer une cave
-app.delete('/deleteCave', caveRoutes.deleteCave)
+app.delete('/cave', caveRoutes.deleteCave)
 
 //L'utilisateur peut consulter toutes ses propres caves. 
-app.get('/listCave', caveRoutes.list)
+app.get('/cave', caveRoutes.list)
 
 //L'utilisateur peut mettre à jour sa cave 
-app.post('/updateCave',caveRoutes.updateCave)
+app.post('/cave/update',caveRoutes.updateCave)
 
 //------------------notes-------------------------//
 
 //L'utilisateur peut créer des notes 
-app.post('/postNote', noteRoutes.createNote)
+app.post('/note', noteRoutes.createNote)
 
 //L'utilisateur peut lister ses notes 
-app.get('/listNote', noteRoutes.listNote)
+app.get('/note/list', noteRoutes.listNote)
 
 //L'utilisateur peut supprimer une note
-app.delete('/deleteNote', noteRoutes.deleteNote)
+app.delete('/note/one', noteRoutes.deleteNote)
 
 //L'utilisateur peut supprimer plusieurs notes 
-app.delete('/deleteManyNotes', noteRoutes.deleteManyNote)
+app.delete('/note/many', noteRoutes.deleteManyNote)
 
 //L'utilisateur peut mettre à jour une note 
-app.post('/updateNote', noteRoutes.updateNote)
+app.post('/note/update', noteRoutes.updateNote)
 
 //-------------------vins-------------------------//
 
 //L'utilisateur peut créer des vins pour les poster directement dans une cave 
-app.post('/createWine', wineRoutes.createWine)
+app.post('/wine/create', wineRoutes.createWine)
 
 //----------------raspberry-----------------------//
 
