@@ -9,23 +9,25 @@ datasource db {
 }
 
 model User {
-  id         Int     @id @default(autoincrement())
-  username   String  @unique
-  password   String
-  mail       String  @unique
-  first_name String?
-  last_name  String?
-  admin      Boolean
-  caves      Cave[]
-  notes      Note[]
+  id           Int     @id @default(autoincrement())
+  username     String  @unique
+  password     String
+  mail         String  @unique
+  first_name   String?
+  last_name    String?
+  admin        Boolean
+  caves        Cave[]
+  notes        Note[]
+  importedCave Cave[]  @relation("AuthorizedCaves")
 }
 
 model Cave {
-  id        Int    @id @default(autoincrement())
-  name      String
-  creatorId Int
-  creator   User   @relation(fields: [creatorId], references: [id])
-  bottles   Wine[]
+  id         Int    @id @default(autoincrement())
+  name       String
+  creatorId  Int
+  creator    User   @relation(fields: [creatorId], references: [id])
+  exportedTo User[] @relation("AuthorizedCaves")
+  bottles    Wine[]
 
   @@index([creatorId], name: "creatorId")
 }

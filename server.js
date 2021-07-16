@@ -40,6 +40,9 @@ app.post("/users/create", userRoutes.createUser);
 //Un utilisateur se log sur le serveur, on test si il existe et si il se log correctement
 app.post("/users/login", userRoutes.login);
 
+//Un utilisateur peut modifier manuellement son mot de passe
+app.post("/users/updatePwd", userRoutes.updatePwd);
+
 //------------------caves-------------------------//
 
 //L'utilisateur peut créer des caves
@@ -71,6 +74,9 @@ app.delete("/note/many", noteRoutes.deleteManyNote);
 //L'utilisateur peut mettre à jour une note
 app.post("/note/update", noteRoutes.updateNote);
 
+//L'utilisateur peut lire une note en particulier
+app.get("/note/read", noteRoutes.readNote);
+
 //-------------------vins-------------------------//
 
 //L'utilisateur peut créer des vins pour les poster directement dans une cave
@@ -81,5 +87,11 @@ app.delete("/wine/user", wineRoutes.deleteWine);
 
 //un administrateur peut supprimer des vins, privés ou publics
 app.delete("/wine/admin", wineRoutes.deleteWineAdmin);
+
+//un vin peut être supprimé d'une cave
+app.delete("/wine/cave", wineRoutes.deleteFromCave);
+
+//un utilisateur peut supprimer plusieurs vins en même temps
+app.delete("/wine/many", wineRoutes.deleteMany);
 
 //----------------raspberry-----------------------//
