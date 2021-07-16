@@ -1,22 +1,20 @@
-const { prisma } = require("../../prisma")
+const { prisma } = require("../../prisma");
 
-try{
-async function list(req,res){
-  const caves = await prisma.cave.findMany({
-    where:{
-      creatorId: req.user.id
-    },
-    include: {
-      bottles: true
-    }
-  })
-
-  return res.status(200).send(caves)
+async function list(req, res) {
+  try {
+    const caves = await prisma.cave.findMany({
+      where: {
+        creatorId: req.user.id,
+      },
+      include: {
+        bottles: true,
+      },
+    });
+    res.status(200).send(caves);
+  } catch (error) {
+    console.log(error);
+    res.status(400).send("Une erreur est survenue");
+  }
 }
 
-}
-catch {
-    res.status(400).send('Une erreur est survenue')
-}
-
-module.exports = list
+module.exports = list;
