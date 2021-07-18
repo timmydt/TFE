@@ -1,17 +1,17 @@
-const { prisma } = require("../../prisma");
+const { prisma } = require("../../prisma")
 
 async function deleteFromCave(req, res) {
   try {
     await prisma.wine.delete({
       where: /*json au format { caves : { id: 1 }} */ {
-        caves: req.body.caves.id,
-      },
-    });
+        caves: req.body.caves.id
+      }
+    })
 
-    res.status(200).send("Le vin a été supprimé de la cave");
+    res.status(200).send("Le vin a été supprimé de la cave")
   } catch (error) {
-    res.status(400).send("erreur");
+    res.status(400).send("erreur")
   }
 }
 
-module.exports = deleteFromCave;
+module.exports = deleteFromCave

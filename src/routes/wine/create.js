@@ -1,4 +1,4 @@
-const { prisma } = require("../../prisma");
+const { prisma } = require("../../prisma")
 
 async function createWine(req, res) {
   try {
@@ -11,13 +11,13 @@ async function createWine(req, res) {
         isPublic: false,
         maker: req.body.maker,
         picture: req.body.picture,
-        year: req.body.year,
-      },
-    });
-    res.status(200).send("La bouteille a été créée");
+        year: req.body.year
+      }
+    })
+    res.status(200).send("La bouteille a été créée")
   } catch {
-    res.status(400).send("Une erreur est survenue");
+    res.status(400).send("Une erreur est survenue")
   }
 }
 
-module.exports = createWine;
+module.exports = createWine

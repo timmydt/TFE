@@ -1,23 +1,23 @@
-const { prisma } = require("../../prisma");
+const { prisma } = require("../../prisma")
 
 async function deleteWineAdmin(req, res) {
   if (req.user.admin == true) {
     try {
       await prisma.wine.delete({
         where: {
-          id: req.body.id,
-        },
-      });
+          id: req.body.id
+        }
+      })
 
-      res.status(200).send("deleted wine");
+      res.status(200).send("deleted wine")
     } catch (error) {
-      console.log(error);
+      console.log(error)
 
-      res.status(400).send("erreur");
+      res.status(400).send("erreur")
     }
   } else {
-    res.status(403).send("Accès refusé, vous n'êtes pas administrateur");
+    res.status(403).send("Accès refusé, vous n'êtes pas administrateur")
   }
 }
 
-module.exports = deleteWineAdmin;
+module.exports = deleteWineAdmin

@@ -1,20 +1,20 @@
-const { prisma } = require("../../prisma");
+const { prisma } = require("../../prisma")
 
 async function deleteWine(req, res) {
   try {
     await prisma.wine.delete({
       where: {
         isPublic: false,
-        id: req.body.id,
-      },
-    });
+        id: req.body.id
+      }
+    })
 
-    res.status(200).send("deleted wine");
+    res.status(200).send("deleted wine")
   } catch (error) {
-    console.log(error);
+    console.log(error)
 
-    res.status(400).send("erreur");
+    res.status(400).send("erreur")
   }
 }
 
-module.exports = deleteWine;
+module.exports = deleteWine

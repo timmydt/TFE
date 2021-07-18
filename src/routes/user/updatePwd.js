@@ -1,37 +1,40 @@
-const { prisma } = require("../../prisma");
+const { prisma } = require("../../prisma")
+const bcrypt = require("bcrypt")
 
 async function updatePwd(req, res) {
   try {
-    const password = req.body.password;
-    const oldPassword = req.body.oldPassword;
-    const salt = await bcrypt.genSalt(10);
-    const oldHash = await bcrypt.hash(oldPassword, salt);
+    const password = req.body.password
+    const oldPassword = req.body.oldPassword
 
-    const exists = await prisma.user.count({
+    const salt = await bcrypt.genSalt(10)
+    const user = await prisma.user.findUnique({
       where: {
-        id: req.user.id,
-        password: oldHash,
-      },
-    });
+        id: req.user.id
+      }
+    })
 
-    if (exists > 0) {
-      // si l'user existe, je demande le nouveau mdp puisque ça veut dire qu'il ne s'est pas trompé
-      const hash = await bcrypt.hash(password, salt);
+    const exist = await bcrypt.compare(oldPassword, user.password)
+
+    console.log(exist)
+
+    if (exist) {
+      const hash = await bcrypt.hash(password, salt)
       const user = await prisma.user.update({
         where: {
-          id: req.user.id,
-          password: hash,
+          id: req.user.id
         },
-      });
-      res
-        .status(200)
-        .send("le mot de passe de l'utilisateur a été mise à jour");
+        data: {
+          password: hash
+        }
+      })
+      res.status(200).send("le mot de passe de l'utilisateur a été mise à jour")
     } else {
-      res.status(400).send("le mdp rentré est incorrect");
+      res.status(400).send("le mdp rentré est incorrect")
     }
-  } catch {
-    res.status(400).send("Une erreur est survenue");
+  } catch (error) {
+    res.status(400).send("Une erreur est survenue")
+    console.log(error)
   }
 }
 
-module.exports = updatePwd;
+module.exports = updatePwd

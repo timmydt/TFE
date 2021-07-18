@@ -1,4 +1,4 @@
-const { prisma } = require("../../prisma");
+const { prisma } = require("../../prisma")
 
 async function createNote(req, res) {
   try {
@@ -8,13 +8,13 @@ async function createNote(req, res) {
         note: req.body.note,
         picture: req.body.picture,
         date: req.body.date,
-        creatorId: req.user.id,
-      },
-    });
-    res.status(200).send("la note a été créée");
+        creatorId: req.user.id
+      }
+    })
+    res.status(200).send("la note a été créée")
   } catch {
-    res.status(400).send("Une erreur est survenue");
+    res.status(400).send("Une erreur est survenue")
   }
 }
 
-module.exports = createNote;
+module.exports = createNote
