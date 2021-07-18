@@ -2,7 +2,7 @@ const { prisma } = require("../../prisma")
 
 async function deleteFromCave(req, res) {
   try {
-    await prisma.wine.delete({
+    await prisma.privateWine.delete({
       where: /*json au format { caves : { id: 1 }} */ {
         caves: req.body.caves.id
       }

@@ -8,7 +8,11 @@ async function createNote(req, res) {
         note: req.body.note,
         picture: req.body.picture,
         date: req.body.date,
-        creatorId: req.user.id
+        creator: {
+          connect: {
+            id: req.user.id
+          }
+        }
       }
     })
     res.status(200).send("la note a été créée")

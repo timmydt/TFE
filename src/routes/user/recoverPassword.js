@@ -1,16 +1,94 @@
-// Premier point d'API pour envoyer le mail
-// Rajouter un champ resetPasswordToken et resetPasswordTokenExpiration dans l'user
-// Quand l'user veut un nouveau mot de passe, on set le nouveau token, et l'expiration avec date actuelle+10mn
-// On envoie le mail
+const nodemailer = require("nodemailer")
+const { v4: uuidv4 } = require("uuid")
+const { prisma } = require("../../prisma")
+const dayjs = require("dayjs")
+const bcrypt = require("bcrypt")
 
-// Second point d'API pour reset le mdp
-// Avec une url du type //reset/{token}
-// On cherche l'user avec le token dans l'url
-// On check si la date d'expiration est passé
-// Si oui on jette l'user
-// Si non on rehash le password, on reset le token et la date et on update l'user
+async function sendMail(token) {
+  let testAccount = await nodemailer.createTestAccount()
 
-try {
-} catch {
-  res.status(400).send("Une erreur est survenue")
+  let transporter = nodemailer.createTransport({
+    host: "smtp.ethereal.email",
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+      user: testAccount.user, // generated ethereal user
+      pass: testAccount.pass // generated ethereal password
+    }
+  })
+
+  let info = await transporter.sendMail({
+    from: '"Fred Foo 👻" <foo@example.com>', // sender address
+    to: "timmy.detroch@outlook.com", // list of receivers
+    subject: "Token", // Subject line
+    text: `ton token batard ${token}` // plain text body
+  })
 }
+
+async function recoverPassword(req, res) {
+  const email = req.body.email
+  const uuid = uuidv4()
+  const user = await prisma.user.findUnique({
+    where: {
+      mail: email
+    }
+  })
+
+  if (user) {
+    const updatedUser = await prisma.user.update({
+      where: {
+        id: user.id
+      },
+      data: {
+        recoverPasswordToken: uuid,
+        recoverPasswordDate: dayjs().add(10, "minutes").toDate()
+      }
+    })
+
+    await sendMail(uuid)
+    res.status(200).send("samarchent")
+  } else {
+    res.status(400).send("pas d'user")
+  }
+}
+
+async function resetPassword(req, res) {
+  const token = req.body.token
+  const password = req.body.password
+
+  const user = await prisma.user.findUnique({
+    where: {
+      recoverPasswordToken: token
+    }
+  })
+
+  if (user) {
+    const now = dayjs()
+    const notExpired = dayjs(user.recoverPasswordDate).isBefore(now)
+
+    if (notExpired) {
+      const salt = await bcrypt.genSalt(10)
+      const hash = await bcrypt.hash(password, salt)
+
+      await prisma.user.update({
+        where: {
+          id: user.id
+        },
+        data: {
+          password: hash,
+          recoverPasswordDate: null,
+          recoverPasswordToken: null
+        }
+      })
+
+      res.status(200).send("Mot de passe updated (sa marchent)")
+    } else {
+      res.status(400).send("Lien expired (sa marchent pas)")
+    }
+  } else {
+    res.status(400).send("Mauvais token (sa marchent pas)")
+  }
+}
+
+exports.resetPassword = resetPassword
+exports.recoverPassword = recoverPassword

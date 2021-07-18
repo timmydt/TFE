@@ -4,7 +4,6 @@ async function deleteWine(req, res) {
   try {
     await prisma.privateWine.delete({
       where: {
-        creatorId: req.user.id,
         id: req.body.id
       }
     })

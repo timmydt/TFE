@@ -5,7 +5,11 @@ async function createCave(req, res) {
     const cave = await prisma.cave.create({
       data: {
         name: req.body.name,
-        creatorId: req.user.id
+        creator: {
+          connect: {
+            id: req.user.id
+          }
+        }
       }
     })
     res.status(200).send("la cave a correctement été créée")

@@ -3,7 +3,11 @@ const { prisma } = require("../../prisma")
 async function listNotes(req, res) {
   try {
     const notes = await prisma.note.findMany({
-      where: { creatorId: req.user.id }
+      where: {
+        creator: {
+          id: req.user.id
+        }
+      }
     })
     res.status(200).send(notes)
   } catch {

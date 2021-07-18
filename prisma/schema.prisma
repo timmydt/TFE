@@ -9,40 +9,56 @@ datasource db {
 }
 
 model User {
-  id           Int     @id @default(autoincrement())
-  username     String  @unique
-  password     String
-  mail         String  @unique
-  first_name   String?
-  last_name    String?
-  admin        Boolean
-  caves        Cave[]
-  notes        Note[]
-  importedCave Cave[]  @relation("AuthorizedCaves")
+  id                   Int           @id @default(autoincrement())
+  username             String        @unique
+  password             String
+  mail                 String        @unique
+  first_name           String?
+  last_name            String?
+  admin                Boolean       @default(false)
+  recoverPasswordDate  DateTime?     @db.Date
+  recoverPasswordToken String? @unique
+  caves                Cave[]
+  notes                Note[]
+  wines                PrivateWine[]
+  importedCave         Cave[]        @relation("AuthorizedCaves")
 }
 
 model Cave {
-  id         Int    @id @default(autoincrement())
+  id         Int           @id @default(autoincrement())
   name       String
   creatorId  Int
-  creator    User   @relation(fields: [creatorId], references: [id])
-  exportedTo User[] @relation("AuthorizedCaves")
-  bottles    Wine[]
+  creator    User          @relation(fields: [creatorId], references: [id])
+  exportedTo User[]        @relation("AuthorizedCaves")
+  bottles    PrivateWine[]
 
   @@index([creatorId], name: "creatorId")
 }
 
-model Wine {
+model PrivateWine {
   id          Int       @id @default(autoincrement())
   name        String
   best_before DateTime? @db.Date
   food        String?
   grapes      String?
-  isPublic    Boolean
   maker       String?
   picture     String?
   year        Int?
+  creatorId   Int
+  creator     User      @relation(fields: [creatorId], references: [id])
   caves       Cave[]
+
+  @@index([creatorId], name: "creatorId")
+}
+
+model PublicWine {
+  id      Int     @id @default(autoincrement())
+  name    String
+  food    String?
+  grapes  String?
+  maker   String?
+  picture String?
+  year    Int?
 }
 
 model Note {

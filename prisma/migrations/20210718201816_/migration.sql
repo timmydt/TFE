@@ -1,0 +1,2 @@
+-- AddForeignKey
+ALTER TABLE `PrivateWine` ADD FOREIGN KEY (`creatorId`) REFERENCES `User`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

@@ -43,6 +43,10 @@ app.post("/users/login", userRoutes.login)
 //Un utilisateur peut modifier manuellement son mot de passe
 app.post("/users/updatePwd", userRoutes.updatePwd)
 
+//récupérer un mot de passe sur un adresse mail
+app.post("/users/recoverPassword", userRoutes.recoverPassword)
+app.post("/users/resetPassword", userRoutes.resetPassword)
+
 //------------------caves-------------------------//
 
 //L'utilisateur peut créer des caves
@@ -85,13 +89,13 @@ app.post("/wine/create", wineRoutes.createWine)
 //L'utilisateur peut supprimer des vins
 app.delete("/wine/user", wineRoutes.deleteWine)
 
-//un administrateur peut supprimer des vins, privés ou publics
-app.delete("/wine/admin", wineRoutes.deleteWineAdmin)
-
 //un vin peut être supprimé d'une cave
 app.delete("/wine/cave", wineRoutes.deleteFromCave)
 
 //un utilisateur peut supprimer plusieurs vins en même temps
 app.delete("/wine/many", wineRoutes.deleteMany)
+
+//un vin peut être ajouté dans une ou plusieurs caves
+app.post("/wine/cave/add", wineRoutes.addToCave)
 
 //----------------raspberry-----------------------//

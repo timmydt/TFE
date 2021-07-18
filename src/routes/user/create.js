@@ -13,7 +13,7 @@ async function createUser(req, res) {
         mail: req.body.mail,
         first_name: req.body.first_name,
         last_name: req.body.last_name,
-        admin: req.body.admin
+        admin: false
       }
     })
     res.status(200).send("l'utilisateur a été ajouté dans la base de données")

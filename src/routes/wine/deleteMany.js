@@ -8,7 +8,7 @@ async function deleteManyWines(req, res) {
 
     for (let id of wineIds) {
       batch.push(
-        prisma.wine.delete({
+        prisma.privateWine.delete({
           where: {
             id: id
           }
