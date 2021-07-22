@@ -6,18 +6,20 @@ const { prisma } = require("./src/prisma")
 const express = require("express")
 const { app } = require("./src/express")
 const { jwtMiddleware } = require("./src/middlewares/jwt")
+const cors = require("cors")
 
 //----------------variables----------------------
 
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(jwtMiddleware)
+app.use(cors())
 
 //---Lancement du serveur et écoute sur le port déclaré dans les dépendances----------
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(
-    `ça fonctionne et écoute à l'adresse http://localhost:${process.env.SERVER_PORT}`
+    `ça fonctionne et écoute à l'adresse ${process.env.SERVER_URL}${process.env.SERVER_PORT}`
   )
 })
 
