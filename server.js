@@ -15,17 +15,15 @@ app.use(express.json())
 app.use(jwtMiddleware)
 
 //---Lancement du serveur et écoute sur le port déclaré dans les dépendances----------
-var corsOptions = {
+const corsOptions = {
   origin: "https://timmy.dnet.ovh",
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  optionsSuccessStatus: 200
 }
 
 app.use(cors(corsOptions))
 
 app.listen(process.env.SERVER_PORT, () => {
-  console.log(
-    `ça fonctionne et écoute à l'adresse ${process.env.SERVER_URL}${process.env.SERVER_PORT}`
-  )
+  console.log("srv started")
 })
 
 //-------------------routes----------------------
@@ -45,7 +43,7 @@ app.get("/users", userRoutes.list)
 app.post("/users/create", userRoutes.createUser)
 
 //Un utilisateur se log sur le serveur, on test si il existe et si il se log correctement
-app.post("/users/login", userRoutes.login)
+app.post("/users/login", cors(corsOptions), userRoutes.login)
 
 //Un utilisateur peut modifier manuellement son mot de passe
 app.post("/users/updatePwd", userRoutes.updatePwd)
