@@ -23,6 +23,11 @@ app.listen(process.env.SERVER_PORT, () => {
   )
 })
 
+var corsOptions = {
+  origin: "https://timmy.dnet.ovh",
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
 //-------------------routes----------------------
 
 const userRoutes = require("./src/routes/user")
