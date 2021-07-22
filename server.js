@@ -13,20 +13,20 @@ const cors = require("cors")
 app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 app.use(jwtMiddleware)
-app.use(cors())
 
 //---Lancement du serveur et écoute sur le port déclaré dans les dépendances----------
+var corsOptions = {
+  origin: "https://timmy.dnet.ovh",
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+
+app.use(cors(corsOptions))
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log(
     `ça fonctionne et écoute à l'adresse ${process.env.SERVER_URL}${process.env.SERVER_PORT}`
   )
 })
-
-var corsOptions = {
-  origin: "https://timmy.dnet.ovh",
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
 
 //-------------------routes----------------------
 
