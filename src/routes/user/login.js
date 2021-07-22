@@ -45,8 +45,9 @@ async function login(req, res) {
         .status(403)
         .send("Le nom d'utilisateur ou le mot de passe entré est incorrect")
     }
-  } catch {
+  } catch (error) {
     res.status(400).send("Une erreur est survenue")
+    console.log(error)
   }
 }
 
