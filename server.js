@@ -37,20 +37,24 @@ const raspRoutes = require("./src/routes/raspberry")
 //---------------utilisateurs---------------------//
 
 //Récupérer tous les utilisateurs présents dans la base de données
-app.get("/users", userRoutes.list)
+app.get("/users", cors(corsOptions), userRoutes.list)
 
 //Poster un utilisateur dans la base de données
-app.post("/users/create", userRoutes.createUser)
+app.post("/users/create", cors(corsOptions), userRoutes.createUser)
 
 //Un utilisateur se log sur le serveur, on test si il existe et si il se log correctement
 app.post("/users/login", cors(corsOptions), userRoutes.login)
 
 //Un utilisateur peut modifier manuellement son mot de passe
-app.post("/users/updatePwd", userRoutes.updatePwd)
+app.post("/users/updatePwd", cors(corsOptions), userRoutes.updatePwd)
 
 //récupérer un mot de passe sur un adresse mail
-app.post("/users/recoverPassword", userRoutes.recoverPassword)
-app.post("/users/resetPassword", userRoutes.resetPassword)
+app.post(
+  "/users/recoverPassword",
+  cors(corsOptions),
+  userRoutes.recoverPassword
+)
+app.post("/users/resetPassword", cors(corsOptions), userRoutes.resetPassword)
 
 //------------------caves-------------------------//
 
@@ -58,49 +62,49 @@ app.post("/users/resetPassword", userRoutes.resetPassword)
 app.post("/cave/create", cors(corsOptions), caveRoutes.createCave)
 
 //L'utilisateur peut supprimer une cave
-app.delete("/cave", caveRoutes.deleteCave)
+app.delete("/cave", cors(corsOptions), caveRoutes.deleteCave)
 
 //L'utilisateur peut consulter toutes ses propres caves.
-app.get("/cave", caveRoutes.list)
+app.get("/cave", cors(corsOptions), caveRoutes.list)
 
 //L'utilisateur peut mettre à jour sa cave
-app.post("/cave/update", caveRoutes.updateCave)
+app.post("/cave/update", cors(corsOptions), caveRoutes.updateCave)
 
 //------------------notes-------------------------//
 
 //L'utilisateur peut créer des notes
-app.post("/note", noteRoutes.createNote)
+app.post("/note", cors(corsOptions), noteRoutes.createNote)
 
 //L'utilisateur peut lister ses notes
-app.get("/note/list", noteRoutes.listNote)
+app.get("/note/list", cors(corsOptions), noteRoutes.listNote)
 
 //L'utilisateur peut supprimer une note
-app.delete("/note/one", noteRoutes.deleteNote)
+app.delete("/note/one", cors(corsOptions), noteRoutes.deleteNote)
 
 //L'utilisateur peut supprimer plusieurs notes
-app.delete("/note/many", noteRoutes.deleteManyNote)
+app.delete("/note/many", cors(corsOptions), noteRoutes.deleteManyNote)
 
 //L'utilisateur peut mettre à jour une note
-app.post("/note/update", noteRoutes.updateNote)
+app.post("/note/update", cors(corsOptions), noteRoutes.updateNote)
 
 //L'utilisateur peut lire une note en particulier
-app.get("/note/read", noteRoutes.readNote)
+app.get("/note/read", cors(corsOptions), noteRoutes.readNote)
 
 //-------------------vins-------------------------//
 
 //L'utilisateur peut créer des vins pour les poster directement dans une cave
-app.post("/wine/create", wineRoutes.createWine)
+app.post("/wine/create", cors(corsOptions), wineRoutes.createWine)
 
 //L'utilisateur peut supprimer des vins
-app.delete("/wine/user", wineRoutes.deleteWine)
+app.delete("/wine/user", cors(corsOptions), wineRoutes.deleteWine)
 
 //un vin peut être supprimé d'une cave
-app.delete("/wine/cave", wineRoutes.deleteFromCave)
+app.delete("/wine/cave", cors(corsOptions), wineRoutes.deleteFromCave)
 
 //un utilisateur peut supprimer plusieurs vins en même temps
-app.delete("/wine/many", wineRoutes.deleteMany)
+app.delete("/wine/many", cors(corsOptions), wineRoutes.deleteMany)
 
 //un vin peut être ajouté dans une ou plusieurs caves
-app.post("/wine/cave/add", wineRoutes.addToCave)
+app.post("/wine/cave/add", cors(corsOptions), wineRoutes.addToCave)
 
 //----------------raspberry-----------------------//
