@@ -65,7 +65,7 @@ app.post("/cave/create", cors(corsOptions), caveRoutes.createCave)
 app.delete("/cave", cors(corsOptions), caveRoutes.deleteCave)
 
 //L'utilisateur peut consulter toutes ses propres caves.
-app.get("/cave", cors(corsOptions), caveRoutes.list)
+app.get("/cave/list", cors(corsOptions), caveRoutes.list)
 
 //L'utilisateur peut mettre à jour sa cave
 app.post("/cave/update", cors(corsOptions), caveRoutes.updateCave)
