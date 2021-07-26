@@ -55,7 +55,7 @@ app.post("/users/resetPassword", userRoutes.resetPassword)
 //------------------caves-------------------------//
 
 //L'utilisateur peut créer des caves
-app.post("/cave/create", caveRoutes.createCave)
+app.post("/cave/create", cors(corsOptions), caveRoutes.createCave)
 
 //L'utilisateur peut supprimer une cave
 app.delete("/cave", caveRoutes.deleteCave)
