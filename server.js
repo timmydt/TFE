@@ -16,7 +16,7 @@ app.use(jwtMiddleware)
 
 //---Lancement du serveur et écoute sur le port déclaré dans les dépendances----------
 const corsOptions = {
-  origin: "https://timmy.dnet.ovh",
+  origin: process.env.SRV_URL,
   optionsSuccessStatus: 200
 }
 
