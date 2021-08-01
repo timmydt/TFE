@@ -6,6 +6,31 @@ async function createUser(req, res) {
     const password = req.body.password //je récupère le mot de passe entré par l'utilisateur
     const salt = await bcrypt.genSalt(10) //il génère le nombre de fois qu'il sera salé
     const hash = await bcrypt.hash(password, salt) //je le sale
+
+    //récupérer les champs "username" et "mail"
+    const username = req.body.username
+    const mail = req.body.mail
+    //tester si ils existent déjà dans la base de données
+    const resultUsername = await prisma.user.findUnique({
+      where: {
+        username: username
+      }
+    })
+    const resultMail = await prisma.user.findUnique({
+      where: {
+        mail: mail
+      }
+    })
+    //si username existe : 401
+    if (resultUsername) {
+      return res.status(401).send("Username already used by someone else")
+    }
+    //si mail existe : 402
+    if (resultMail) {
+      return res.status(402).send("Mail already used by someone else")
+    }
+    //si ok, créer
+
     const user = await prisma.user.create({
       data: {
         username: req.body.username,

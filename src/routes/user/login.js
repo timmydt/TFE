@@ -13,14 +13,11 @@ async function login(req, res) {
         username: username
       }
     })
-    console.log(result)
     //si il existe, je compare le mot de passe et le hash de l'user dans la db
     if (result != null) {
-      console.log("l'utilsiateur existe")
       const exist = await bcrypt.compare(password, result.password)
       //si le mdp correspond, je valide la connexion
       if (exist == true) {
-        console.log("il est le bon mot de passe et est testé")
         //on attribue à l'utilisateur un token qui reprend son id et son nom si c'est le bon mdp
         const user = {
           id: result.id,
