@@ -16,7 +16,7 @@ model User {
   first_name           String?
   last_name            String?
   admin                Boolean       @default(false)
-  recoverPasswordDate  DateTime?     @db.Date
+  recoverPasswordDate  DateTime?     @default(now())
   recoverPasswordToken String? @unique
   caves                Cave[]
   notes                Note[]

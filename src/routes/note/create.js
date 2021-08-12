@@ -16,8 +16,9 @@ async function createNote(req, res) {
       }
     })
     res.status(200).send("la note a été créée")
-  } catch {
+  } catch (error) {
     res.status(400).send("Une erreur est survenue")
+    console.log(error)
   }
 }
 
