@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt")
+const Joi = require("joi")
 const { prisma } = require("../../prisma")
 
 async function createUser(req, res) {
@@ -6,10 +7,18 @@ async function createUser(req, res) {
     const password = req.body.password //je récupère le mot de passe entré par l'utilisateur
     const salt = await bcrypt.genSalt(10) //il génère le nombre de fois qu'il sera salé
     const hash = await bcrypt.hash(password, salt) //je le sale
+    const mailSchema = Joi.string().email().required()
+    const validateMail = mailSchema.validate(req.body.mail)
 
-    //récupérer les champs "username" et "mail"
     const username = req.body.username
     const mail = req.body.mail
+
+    if (validateMail.error) {
+      return res.status(400).send("L'email est invalide")
+    }
+
+    //récupérer les champs "username" et "mail"
+
     //tester si ils existent déjà dans la base de données
     const resultUsername = await prisma.user.findUnique({
       where: {
@@ -29,6 +38,7 @@ async function createUser(req, res) {
     if (resultMail) {
       return res.status(402).send("Mail already used by someone else")
     }
+
     //si ok, créer
 
     const user = await prisma.user.create({
@@ -42,8 +52,9 @@ async function createUser(req, res) {
       }
     })
     res.status(200).send("l'utilisateur a été ajouté dans la base de données")
-  } catch {
+  } catch (error) {
     res.status(400).send("Une erreur est survenue")
+    console.log(error)
   }
 }
 
