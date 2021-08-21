@@ -1,66 +1,92 @@
 const { prisma } = require("../../prisma")
+const fs = require("fs")
+const converter = require("json-2-csv")
+const { Storage } = require("@google-cloud/storage")
+const path = require("path")
+const { format } = require("url")
+
+const storage = new Storage({
+  keyFilename: path.join(__dirname, '..', '..', '..', 'cloud-vision-key.json')
+})
+const bucket = storage.bucket('tfe-timmy')
+
+function getCaves(creatorId) {
+  return prisma.cave.findMany({
+    where: {
+      creatorId
+    }
+  })
+}
+
+function getNotes(id) {
+  return prisma.note.findMany({
+    where: {
+      creator: {
+        id
+      }
+    }
+  })
+}
+
+function getBottles(id) {
+  return prisma.privateWine.findMany({
+    where: {
+      creator: {
+        id
+      }
+    }
+  })
+}
+
+async function generateCSV(err, data, name) {
+  return new Promise((resolve, reject) => {
+    if (err) {
+      throw err
+    }
+  
+    const buffer = Buffer.from(data, 'utf-8')
+    const file = bucket.file(name)
+    const stream = file.createWriteStream({ resumable: false })
+  
+    stream.on("error", (err) => {
+      reject(err)
+    })
+  
+    stream.on("finish", async (data) => {
+      const uri = format(`https://storage.googleapis.com/${bucket.name}/${file.name}`) 
+      resolve(uri)
+    })
+  
+    stream.end(buffer)
+  })
+}
 
 async function getCsv(req, res) {
   try {
-    const fs = require("fs")
-    const converter = require("json-2-csv")
+    const {id} = req.user
+    const [caves, notes, bottles] = await prisma.$transaction([
+      getCaves(id),
+      getNotes(id),
+      getBottles(id)
+    ])
 
-    async function getDataCave() {
-      const dataCave = await prisma.cave.findMany({
-        where: {
-          creatorId: req.user.id
-        }
-      })
-      return dataCave
-    }
+    converter.json2csv(caves, async (err, data) => {
+      const cavesURI = await generateCSV(err, data, `caves-${id}.csv`)
 
-    async function getDataNote() {
-      const dataNote = await prisma.note.findMany({
-        where: {
-          creator: {
-            id: req.user.id
-          }
-        }
-      })
-      return dataNote
-    }
+      converter.json2csv(notes, async (err, data) => {
+        const notesURI = await generateCSV(err, data, `notes-${id}.csv`)
 
-    async function getDataBottle() {
-      const dataBottle = await prisma.privateWine.findMany({
-        where: {
-          creator: {
-            id: req.user.id
-          }
-        }
-      })
-      return dataBottle
-    }
+        converter.json2csv(bottles, async (err, data) => {
+          const bottlesURI = await generateCSV(err, data, `bottles-${id}.csv`)
 
-    //formatage des json
-    const DataToCsvCave = function (err, csvCave) {
-      if (err) throw err
-      fs.writeFile("MyCsv.csv", csvCave, function (err) {
-        if (err) throw err
+          res.status(200).send({
+            cavesURI,
+            notesURI,
+            bottlesURI
+          })
+        })
       })
-    }
-
-    const DataToCsvNote = function (err, csvNote) {
-      if (err) throw err
-      fs.appendFile("MyCsv.csv", csvNote, function (err) {
-        if (err) throw err
-      })
-    }
-    const DataToCsvBottle = function (err, csvBottle) {
-      if (err) throw err
-      fs.appendFile("MyCsv.csv", csvBottle, function (err) {
-        if (err) throw err
-      })
-    }
-
-    converter.json2csv(await getDataCave(), DataToCsvCave)
-    converter.json2csv(await getDataNote(), DataToCsvNote)
-    converter.json2csv(await getDataBottle(), DataToCsvBottle)
-    res.status(200).send("CSV Created")
+    })
   } catch (error) {
     res.status(400).send(error)
   }

@@ -20,6 +20,7 @@
     "express": "^4.17.1",
     "express-jwt": "^6.0.0",
     "formidable": "^1.2.2",
+    "fs-extra": "^10.0.0",
     "git": "^0.1.5",
     "json-2-csv": "^3.14.4",
     "jsonwebtoken": "^8.5.1",
