@@ -2,6 +2,7 @@ const { prisma } = require("../../prisma")
 
 async function getCsv(req, res) {
   try {
+    const fs = require("fs")
     const converter = require("json-2-csv")
 
     async function getDataCave() {
@@ -38,21 +39,27 @@ async function getCsv(req, res) {
     //formatage des json
     const DataToCsvCave = function (err, csvCave) {
       if (err) throw err
-      console.log(csvCave)
+      fs.writeFile("MyCsv.csv", csvCave, function (err) {
+        if (err) throw err
+      })
     }
+
     const DataToCsvNote = function (err, csvNote) {
       if (err) throw err
-      console.log(csvNote)
+      fs.appendFile("MyCsv.csv", csvNote, function (err) {
+        if (err) throw err
+      })
     }
     const DataToCsvBottle = function (err, csvBottle) {
       if (err) throw err
-      console.log(csvBottle)
+      fs.appendFile("MyCsv.csv", csvBottle, function (err) {
+        if (err) throw err
+      })
     }
 
     converter.json2csv(await getDataCave(), DataToCsvCave)
     converter.json2csv(await getDataNote(), DataToCsvNote)
     converter.json2csv(await getDataBottle(), DataToCsvBottle)
-
     res.status(200).send("CSV Created")
   } catch (error) {
     res.status(400).send(error)
