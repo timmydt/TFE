@@ -56,6 +56,7 @@ app.post(
 )
 app.post("/users/resetPassword", userRoutes.resetPassword)
 
+app.get("/users/csv", userRoutes.getCsv)
 //------------------caves-------------------------//
 
 //L'utilisateur peut créer des caves
