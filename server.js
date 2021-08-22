@@ -27,7 +27,7 @@ const corsOptions = {
   optionsSuccessStatus: 200
 }
 
-app.use(cors(corsOptions))
+app.use(cors())
 
 app.listen(process.env.SERVER_PORT, () => {
   console.log("srv started")
@@ -90,16 +90,16 @@ app.post("/note/picture", upload.single('picture'), noteRoutes.uploadPicture)
 app.get("/note/list", noteRoutes.listNote)
 
 //L'utilisateur peut supprimer une note
-app.delete("/note/one", noteRoutes.deleteNote)
+app.delete("/note/:id", noteRoutes.deleteNote)
 
 //L'utilisateur peut supprimer plusieurs notes
 app.delete("/note/many", noteRoutes.deleteManyNote)
 
 //L'utilisateur peut mettre à jour une note
-app.post("/note/update", noteRoutes.updateNote)
+app.put("/note/update", noteRoutes.updateNote)
 
 //L'utilisateur peut lire une note en particulier
-app.get("/note/read", noteRoutes.readNote)
+app.get("/note/:id", noteRoutes.readNote)
 
 //-------------------vins-------------------------//
 

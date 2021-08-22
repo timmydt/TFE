@@ -1,9 +1,10 @@
 const { prisma } = require("../../prisma")
 
 async function readNote(req, res) {
+  console.log(req.params.id)
   try {
     const note = await prisma.note.findUnique({
-      where: { id: req.note.id }
+      where: { id: Number(req.params.id) }
     })
     res.status(200).send(note)
   } catch {

@@ -63,7 +63,7 @@ model PublicWine {
 
 model Note {
   id        Int       @id @default(autoincrement())
-  note      String?
+  note      String? @db.LongText
   picture   String?
   date      DateTime?
   creatorId Int
