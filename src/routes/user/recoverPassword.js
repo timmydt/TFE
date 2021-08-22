@@ -3,11 +3,10 @@ const { v4: uuidv4 } = require("uuid")
 const { prisma } = require("../../prisma")
 const dayjs = require("dayjs")
 const bcrypt = require("bcrypt")
-require("../dotenv").config()
 
 async function sendMail(token) {
   let testAccount = await nodemailer.createTestAccount()
-
+  require("../dotenv").config()
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 587,
