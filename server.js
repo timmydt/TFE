@@ -7,11 +7,11 @@ const express = require("express")
 const { app } = require("./src/express")
 const { jwtMiddleware } = require("./src/middlewares/jwt")
 const cors = require("cors")
-const multer = require('multer')
+const multer = require("multer")
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {
-    fileSize: 5 * 1024 * 1024, // Limite de 5mb
+    fileSize: 5 * 1024 * 1024 // Limite de 5mb
   }
 })
 
@@ -78,13 +78,15 @@ app.get("/cave/list", caveRoutes.list)
 //L'utilisateur peut mettre à jour sa cave
 app.post("/cave/update", caveRoutes.updateCave)
 
+app.get("/cave/:id", caveRoutes.listUnique)
+
 //------------------notes-------------------------//
 
 //L'utilisateur peut créer des notes
 app.post("/note", noteRoutes.createNote)
 
 // Pre upload une image pour compléter les champs
-app.post("/note/picture", upload.single('picture'), noteRoutes.uploadPicture)
+app.post("/note/picture", upload.single("picture"), noteRoutes.uploadPicture)
 
 //L'utilisateur peut lister ses notes
 app.get("/note/list", noteRoutes.listNote)
