@@ -1,13 +1,13 @@
 const fs = require("fs")
 const path = require("path")
 const { prisma } = require("../prisma")
-const files = fs.readdirSync(path.join("wines", "vivino"))
+const files = fs.readdirSync(path.join(__dirname, "wines", "vivino"))
 const batch = []
 
 // Liste tout les fichiers json
 for (let file of files) {
   // Pour chaque fichier json, on lit le contenu
-  const data = fs.readFileSync(path.join("wines", "vivino", file))
+  const data = fs.readFileSync(path.join(__dirname, "wines", "vivino", file))
   // On transforme le string en JSON
   const json = JSON.parse(data)
 

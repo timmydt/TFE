@@ -106,7 +106,7 @@ app.get("/note/:id", noteRoutes.readNote)
 //-------------------vins-------------------------//
 
 // Récupère tout les vins public
-app.get('/wines', wineRoutes.list)
+app.post('/wines', wineRoutes.list)
 
 //L'utilisateur peut créer des vins pour les poster directement dans une cave
 app.post("/wine/create", wineRoutes.createWine)
