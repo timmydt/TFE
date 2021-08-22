@@ -76,7 +76,7 @@ app.delete("/cave", caveRoutes.deleteCave)
 app.get("/cave/list", caveRoutes.list)
 
 //L'utilisateur peut mettre à jour sa cave
-app.post("/cave/update", caveRoutes.updateCave)
+app.put("/cave/update", caveRoutes.updateCave)
 
 app.get("/cave/:id", caveRoutes.listUnique)
 
@@ -115,7 +115,7 @@ app.post("/wine/create", wineRoutes.createWine)
 app.delete("/wine/user", wineRoutes.deleteWine)
 
 //un vin peut être supprimé d'une cave
-app.delete("/wine/cave", wineRoutes.deleteFromCave)
+app.delete("/wine/cave/:id", wineRoutes.deleteFromCave)
 
 //un utilisateur peut supprimer plusieurs vins en même temps
 app.delete("/wine/many", wineRoutes.deleteMany)

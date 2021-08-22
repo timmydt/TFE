@@ -4,7 +4,7 @@ async function deleteFromCave(req, res) {
   try {
     await prisma.privateWine.delete({
       where: /*json au format { caves : { id: 1 }} */ {
-        caves: req.body.caves.id
+        id: Number(req.params.id)
       }
     })
 

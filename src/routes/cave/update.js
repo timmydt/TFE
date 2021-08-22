@@ -4,7 +4,7 @@ async function updateCave(req, res) {
   try {
     const cave = await prisma.cave.update({
       where: {
-        id: req.body.id
+        id: Number(req.body.id)
       },
       data: {
         name: req.body.name
@@ -12,7 +12,8 @@ async function updateCave(req, res) {
     })
 
     res.status(200).send("la cave a été mise à jour")
-  } catch {
+  } catch(err) {
+    console.log(err)
     res.status(400).send("Une erreur est survenue")
   }
 }
