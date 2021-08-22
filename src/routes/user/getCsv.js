@@ -3,12 +3,12 @@ const fs = require("fs")
 const converter = require("json-2-csv")
 const { Storage } = require("@google-cloud/storage")
 const path = require("path")
-const { format } = require("url")
+const { format } = require("util")
 
 const storage = new Storage({
-  keyFilename: path.join(__dirname, '..', '..', '..', 'cloud-vision-key.json')
+  keyFilename: path.join(__dirname, "..", "..", "..", "cloud-vision-key.json")
 })
-const bucket = storage.bucket('tfe-timmy')
+const bucket = storage.bucket("tfe-timmy")
 
 function getCaves(creatorId) {
   return prisma.cave.findMany({
@@ -43,27 +43,29 @@ async function generateCSV(err, data, name) {
     if (err) {
       throw err
     }
-  
-    const buffer = Buffer.from(data, 'utf-8')
+
+    const buffer = Buffer.from(data, "utf-8")
     const file = bucket.file(name)
     const stream = file.createWriteStream({ resumable: false })
-  
+
     stream.on("error", (err) => {
       reject(err)
     })
-  
+
     stream.on("finish", async (data) => {
-      const uri = format(`https://storage.googleapis.com/${bucket.name}/${file.name}`) 
+      const uri = format(
+        `https://storage.googleapis.com/${bucket.name}/${file.name}`
+      )
       resolve(uri)
     })
-  
+
     stream.end(buffer)
   })
 }
 
 async function getCsv(req, res) {
   try {
-    const {id} = req.user
+    const { id } = req.user
     const [caves, notes, bottles] = await prisma.$transaction([
       getCaves(id),
       getNotes(id),
