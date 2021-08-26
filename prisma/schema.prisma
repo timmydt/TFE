@@ -47,6 +47,8 @@ model PrivateWine {
   creatorId   Int
   creator     User      @relation(fields: [creatorId], references: [id])
   caves       Cave[]
+  quantity Int @default(1)
+  rating Int @default(0)
 
   @@index([creatorId], name: "creatorId")
 }
@@ -69,6 +71,7 @@ model Note {
   creatorId Int
   name      String?
   creator   User      @relation(fields: [creatorId], references: [id])
+  rating Int @default(0)
 
   @@index([creatorId], name: "creatorId")
 }

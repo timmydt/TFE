@@ -4,7 +4,7 @@ async function listUnique(req, res) {
   try {
     const cave = await prisma.cave.findUnique({
       where: {
-        id: parseInt(req.params.id)
+        id: Number(req.params.id)
       },
       include: {
         bottles: true

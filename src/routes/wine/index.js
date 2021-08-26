@@ -4,6 +4,9 @@ const deleteFromCave = require("./deleteFromCave")
 const deleteMany = require("./deleteMany")
 const addToCave = require("./addToCave")
 const list = require("./list")
+const rate = require("./rate")
+const find = require("./find")
+const update = require("./update")
 
 exports.createWine = createWine
 exports.deleteWine = deleteWine
@@ -11,3 +14,6 @@ exports.deleteFromCave = deleteFromCave
 exports.deleteMany = deleteMany
 exports.addToCave = addToCave
 exports.list = list
+exports.rate = rate
+exports.find = find
+exports.update = update

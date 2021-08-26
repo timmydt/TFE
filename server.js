@@ -105,11 +105,20 @@ app.get("/note/:id", noteRoutes.readNote)
 
 //-------------------vins-------------------------//
 
+// Récupèree un vin
+app.get('/wine/:id', wineRoutes.find)
+
+// Met à jour un vin
+app.put('/wine', upload.single("picture"), wineRoutes.update)
+
 // Récupère tout les vins public
 app.post('/wines', wineRoutes.list)
 
+// Note un vin
+app.post('/wine/rate', wineRoutes.rate)
+
 //L'utilisateur peut créer des vins pour les poster directement dans une cave
-app.post("/wine/create", wineRoutes.createWine)
+app.post("/wine/create", upload.single("picture"), wineRoutes.createWine)
 
 //L'utilisateur peut supprimer des vins
 app.delete("/wine/user", wineRoutes.deleteWine)
