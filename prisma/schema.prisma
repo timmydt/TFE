@@ -17,7 +17,7 @@ model User {
   last_name            String?
   admin                Boolean       @default(false)
   recoverPasswordDate  DateTime?     @db.Date
-  recoverPasswordToken String? @unique
+  recoverPasswordToken String?       @unique
   caves                Cave[]
   notes                Note[]
   wines                PrivateWine[]
@@ -46,9 +46,10 @@ model PrivateWine {
   year        Int?
   creatorId   Int
   creator     User      @relation(fields: [creatorId], references: [id])
-  caves       Cave[]
-  quantity Int @default(1)
-  rating Int @default(0)
+  caveId      Int
+  cave        Cave      @relation(fields: [caveId], references: [id])
+  quantity    Int       @default(1)
+  rating      Int       @default(0)
 
   @@index([creatorId], name: "creatorId")
 }
@@ -65,13 +66,13 @@ model PublicWine {
 
 model Note {
   id        Int       @id @default(autoincrement())
-  note      String? @db.LongText
+  note      String?   @db.LongText
   picture   String?
   date      DateTime?
   creatorId Int
   name      String?
   creator   User      @relation(fields: [creatorId], references: [id])
-  rating Int @default(0)
+  rating    Int       @default(0)
 
   @@index([creatorId], name: "creatorId")
 }

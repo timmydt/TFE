@@ -35,7 +35,7 @@ async function createWine(req, res) {
               id: Number(req.user.id)
             }
           },
-          caves: {
+          cave: {
             connect: {
               id: Number(req.body.caveId)
             }

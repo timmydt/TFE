@@ -63,7 +63,16 @@ app.post(
 )
 app.post("/users/resetPassword", userRoutes.resetPassword)
 
+// Export des csv
 app.get("/users/csv", userRoutes.getCsv)
+
+// Import des CSV
+app.post(
+  '/users/csv',
+  upload.fields([{ name: 'caveCsv', maxCount: 1 }, { name: 'wineCsv', maxCount: 1 }]),
+  userRoutes.importCsv
+)
+
 //------------------caves-------------------------//
 
 //L'utilisateur peut créer des caves

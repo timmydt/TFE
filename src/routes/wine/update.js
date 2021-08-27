@@ -25,7 +25,7 @@ async function update(req, res) {
           quantity: Number(req.body.quantity)
         }
       })
-      console.log(wine)
+      
       return res.status(200).send("La bouteille a été créée")
     } catch(err) {
       return res.status(400).send("Une erreur est survenue")

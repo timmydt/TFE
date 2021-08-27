@@ -27,8 +27,8 @@ async function addToCave(req, res) {
             creator: {
               connect: { id: user }
             },
-            caves: {
-              connect: [{ id: cave }]
+            cave: {
+              connect: { id: cave }
             }
           }
         })
