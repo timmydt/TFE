@@ -44,7 +44,7 @@ const raspRoutes = require("./src/routes/raspberry")
 //---------------utilisateurs---------------------//
 
 //Récupérer tous les utilisateurs présents dans la base de données
-app.get("/users", userRoutes.list)
+app.post("/users", userRoutes.list)
 
 //Poster un utilisateur dans la base de données
 app.post("/users/create", userRoutes.createUser)
@@ -87,7 +87,15 @@ app.get("/cave/list", caveRoutes.list)
 //L'utilisateur peut mettre à jour sa cave
 app.put("/cave/update", caveRoutes.updateCave)
 
+// Recupere les caves exportées
+app.get('/sharedCaves', caveRoutes.shared)
+
+// Récupère une cave
 app.get("/cave/:id", caveRoutes.listUnique)
+
+// Partage les caves a d'autre users
+app.post('/cave/share', caveRoutes.setVisibility)
+
 
 //------------------notes-------------------------//
 

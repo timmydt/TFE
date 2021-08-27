@@ -3,8 +3,21 @@ const { prisma } = require("../../prisma")
 async function list(req, res) {
   try {
     const users = await prisma.user.findMany({
-      include: {
-        caves: true
+      where: {
+        AND: {
+          id: {
+            not: req.user.id
+          },
+          username: {
+            contains: req.body.search
+          }
+        }
+      },
+      select: {
+        id: true,
+        username: true,
+        last_name: true,
+        first_name: true
       }
     })
     res.status(200).send(users)
